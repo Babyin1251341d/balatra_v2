@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Обробник повідомлень
 bot.on('text', (ctx) => {
-    ctx.reply('Hello!');
+    ctx.reply('Hello naxui!');
 });
 
 bot.on('message', (ctx) => {
