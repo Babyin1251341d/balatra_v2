@@ -6,15 +6,29 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Обробник повідомлень
 bot.on('text', (ctx) => {
-    ctx.reply('Hello naxui!');
+    ctx.reply('Hello naxui zxc!');
 });
 
-bot.on('message', (ctx) => {
-    console.log(ctx.chat); // Виводимо всю інформацію про чат у логах
-    ctx.reply(`Ваш chat_id: ${ctx.chat.id}`);
+bot.on('message', async (ctx) => {
+    const messageText = ctx.message.text;
+    const chatId = ctx.chat.id;
+    const messageId = ctx.message.message_id;
+
+    if (messageText && messageText.toLowerCase().includes("привіт")) {
+        try {
+            await ctx.deleteMessage(messageId);
+            console.log(`Deleted message in chat ${chatId}: "${messageText}"`);
+        } catch (error) {
+            console.error(`Failed to delete message:`, error);
+        }
+    }
 });
 
-// Запуск бота
-bot.launch();
+if (!bot.polling) {  // Prevent multiple polling instances
+    bot.launch();
+    console.log("Bot is running...");
+} else {
+    console.log("Bot is already running!");
+}
 
 console.log('Bot is running...');
